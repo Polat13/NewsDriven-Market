@@ -28,18 +28,22 @@ export default function StockDetailPage() {
         setLoading(true);
         setError("");
 
-        if (STOCK_INFO[symbol]) {
-          setStock(STOCK_INFO[symbol]);
-          setChartData(makeFakeSeries(30, STOCK_INFO[symbol].startPrice, symbol));
-        } else {
-          try {
-            const data = await http(`/stocks/${symbol}`);
-            setStock({
-              name: data.name || data.companyName || "Unknown",
-              startPrice: data.price || data.lastPrice || 100,
-            });
-            setChartData(makeFakeSeries(30, data.price || data.lastPrice || 100, symbol));
-          } catch {
+        // Always try to fetch from backend first
+        try {
+          const data = await http(`/stocks/${symbol}`);
+          setStock({
+            name: data.name || data.companyName || "Unknown",
+            startPrice: data.price || data.lastPrice || 100,
+          });
+          setChartData(makeFakeSeries(30, data.price || data.lastPrice || 100, symbol));
+        } catch (backendError) {
+          // Fallback: Use hard-coded data if available, otherwise use default
+          console.warn(`Backend fetch failed for ${symbol}, using fallback data:`, backendError.message);
+
+          if (STOCK_INFO[symbol]) {
+            setStock(STOCK_INFO[symbol]);
+            setChartData(makeFakeSeries(30, STOCK_INFO[symbol].startPrice, symbol));
+          } else {
             setStock({ name: "Unknown", startPrice: 150 });
             setChartData(makeFakeSeries(30, 150, symbol));
           }
