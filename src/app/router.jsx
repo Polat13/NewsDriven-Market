@@ -20,6 +20,10 @@ const AnalysisPage = lazy(() => import("../features/analysis/pages/AnalysisPage"
 const AnalysisDetailPage = lazy(() => import("../features/analysis/pages/AnalysisDetailPage"));
 const SettingsPage = lazy(() => import("../features/settings/pages/SettingsPage"));
 
+// Legal pages - lazy load
+const PrivacyPage = lazy(() => import("../shared/pages/PrivacyPage"));
+const TermsPage = lazy(() => import("../shared/pages/TermsPage"));
+
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
@@ -118,6 +122,22 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <SettingsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "privacy",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <PrivacyPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "terms",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <TermsPage />
           </Suspense>
         ),
       },

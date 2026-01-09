@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { getMe, updateMe } from "../api/SettingsService";
 
@@ -172,6 +173,30 @@ export default function SettingsPage() {
           </button>
         </div>
       </div>
+
+      {/* Yasal Belgeler Bölümü */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+        <div className="p-6 border-b border-gray-200">
+          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            📄 Yasal Belgeler
+          </h2>
         </div>
+
+        <div className="p-6 flex flex-col gap-3">
+          <Link
+            to="/privacy"
+            className="w-full py-3 px-4 bg-gray-100 text-gray-900 font-semibold rounded-xl hover:bg-gray-200 transition-colors text-center"
+          >
+            🔒 Gizlilik Politikası
+          </Link>
+          <Link
+            to="/terms"
+            className="w-full py-3 px-4 bg-gray-100 text-gray-900 font-semibold rounded-xl hover:bg-gray-200 transition-colors text-center"
+          >
+            📋 Kullanım Şartları
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
